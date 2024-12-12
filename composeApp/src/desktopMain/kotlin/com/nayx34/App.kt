@@ -46,7 +46,7 @@ fun App(sqlDriver: SqlDriver) {
     MaterialTheme {
         val controller = rememberNavController()
         NavHost(controller, startDestination = DogRoute){
-            composable<DogRoute>{ entry -> SelectCarById(database, 2, entry.toRoute(),controller) }
+            composable<HomeRoute>{ HomeScreen(controller) }
           composable<DogRoute>{ entry -> SelectCarById(database, 2, entry.toRoute(),controller) }
             composable<InsertDogWithReturning>{  entry -> InsertWithReturn(database, entry.toRoute(),controller) }
       }
@@ -81,10 +81,10 @@ fun HomeScreen(controller: NavController){
     Column{
         Nav(controller)
         Text("Metodo1")
-        Button(onClick = {controller.navigate(CityRoute("Girona"))}){
+        Button(onClick = {controller.navigate(DogRoute)}){
         }
         Text("Metodo2")
-        Button(onClick = {controller.navigate(CountryRoute)}){
+        Button(onClick = {controller.navigate(InsertDogWithReturning)}){
             Text("Country")
         }
     }
