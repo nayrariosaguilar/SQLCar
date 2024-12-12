@@ -1,0 +1,11 @@
+
+CREATE TABLE IF NOT EXISTS Car (
+  tuition INTEGER PRIMARY KEY AUTOINCREMENT,
+  color TEXT NOT NULL
+);
+
+insertCar:
+INSERT INTO Car(color) VALUES (?);
+
+selectCar:
+SELECT * FROM Car;
