@@ -9,3 +9,12 @@ INSERT INTO Car(color) VALUES (?);
 
 selectCar:
 SELECT * FROM Car;
+
+selectConLimits:
+SELECT * FROM Car LIMIT: limit OFFSET: offset;
+
+selectById:
+SELECT * FROM Car WHERE tuition = ?;
+
+insertWithReturn:
+INSERT INTO Car(color) VALUES (?) RETURNING *;
