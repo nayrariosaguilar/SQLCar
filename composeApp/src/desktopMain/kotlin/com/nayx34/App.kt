@@ -75,6 +75,13 @@ object HomeRoute
 object DogRoute
 @Serializable
 object InsertDogWithReturning
+@Serializable
+object CarListScreenWithLimits
+@Serializable
+object CarListScreen
+@Serializable
+object deleteCarById
+
 
 @Composable
 fun HomeScreen(controller: NavController){
@@ -87,6 +94,18 @@ fun HomeScreen(controller: NavController){
         Text("Metodo2")
         Button(onClick = {controller.navigate(InsertDogWithReturning)}){
             Text("Insert with returning")
+        }
+        Text("Metodo3")
+        Button(onClick = {controller.navigate(CarListScreen)}){
+            Text("CarListScreen")
+        }
+        Text("Metodo4")
+        Button(onClick = {controller.navigate(CarListScreenWithLimits)}){
+            Text("CarListScreenWithLimits")
+        }
+        Text("Metodo5")
+        Button(onClick = {controller.navigate(deleteCarById)}){
+            Text("deleteCarById")
         }
     }
 }
