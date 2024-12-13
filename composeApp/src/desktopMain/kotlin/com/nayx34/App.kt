@@ -45,9 +45,9 @@ fun App(sqlDriver: SqlDriver) {
 
     MaterialTheme {
         val controller = rememberNavController()
-        NavHost(controller, startDestination = DogRoute){
+        NavHost(controller, startDestination = HomeRoute){
             composable<HomeRoute>{ HomeScreen(controller) }
-          composable<DogRoute>{ entry -> SelectCarById(database, 2, entry.toRoute(),controller) }
+            composable<DogRoute>{ entry -> SelectCarById(database, 2, entry.toRoute(),controller) }
             composable<InsertDogWithReturning>{  entry -> InsertWithReturn(database, entry.toRoute(),controller) }
       }
 
@@ -60,9 +60,9 @@ fun insertDatabase(db: Database){
 @Composable
 fun Nav(controller: NavController){
     TopAppBar(
-        title = {Text("Barra de nav")},
+        title = {Text("Operaciones crud")},
         actions = {
-            IconButton(onClick = {controller.navigate(DogRoute)}){
+            IconButton(onClick = {controller.navigate(HomeRoute)}){
                 Icon(imageVector = Icons.Filled.Home, contentDescription = "Home")
             }
         }
@@ -82,10 +82,11 @@ fun HomeScreen(controller: NavController){
         Nav(controller)
         Text("Metodo1")
         Button(onClick = {controller.navigate(DogRoute)}){
+            Text("SelectCarById")
         }
         Text("Metodo2")
         Button(onClick = {controller.navigate(InsertDogWithReturning)}){
-            Text("Country")
+            Text("Insert with returning")
         }
     }
 }
@@ -100,7 +101,7 @@ fun CarListScreenWithLimits(db: Database){
     LazyColumn { items(cars){ car -> Text(car.tuition.toString())} }
 }
 @Composable
-fun SelectCarById(db: Database, dogId: Long, route: DogRoute,controller: NavController) {
+fun SelectCarById(db: Database, dogId: Long, route: HomeRoute,controller: NavController) {
     val car = db.carQueries.selectById(dogId).executeAsOne()
     Column {
         Nav(controller)
@@ -110,9 +111,12 @@ fun SelectCarById(db: Database, dogId: Long, route: DogRoute,controller: NavCont
 
 }
 @Composable
-fun InsertWithReturn(db: Database,route: DogRoute,controller: NavController) {
-    val idefix = db.carQueries.insertWithReturn("Naysitacolor").executeAsOne()
-       Text(idefix.toString())
+fun InsertWithReturn(db: Database,route: HomeRoute,controller: NavController) {
+    Column {
+        Nav(controller)
+        val idefix = db.carQueries.insertWithReturn("Naysitacolor").executeAsOne()
+        Text(idefix.toString())
+    }
 }
 
 
