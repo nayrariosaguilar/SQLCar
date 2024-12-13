@@ -49,12 +49,18 @@ fun App(sqlDriver: SqlDriver) {
             composable<HomeRoute>{ HomeScreen(controller) }
             composable<DogRoute>{ entry -> SelectCarById(database, 2, entry.toRoute(),controller) }
             composable<InsertDogWithReturning>{  entry -> InsertWithReturn(database, entry.toRoute(),controller) }
+            composable<CarListScreenWithLimits>{  entry -> CarListScreenWithLimits(database, controller) }
+            composable<CarListScreen>{  entry -> CarListScreen(database,controller, entry.toRoute()) }
+            composable<deleteCarById>{  entry -> deleteCarById(database, 2,controller, entry.toRoute()) }
       }
 
     }
 }
 fun insertDatabase(db: Database){
     db.carQueries.insertCar("azul")
+    db.carQueries.insertCar("rojo")
+    db.carQueries.insertCar("negro")
+    db.carQueries.insertCar("blanco")
     db.carQueries.insertCar("verde")
 }
 @Composable
@@ -110,24 +116,40 @@ fun HomeScreen(controller: NavController){
     }
 }
 @Composable
-fun CarListScreen(db: Database,controller: NavController){
+fun CarListScreen(db: Database,controller: NavController,route: HomeRoute){
     val cars = db.carQueries.selectCar().executeAsList()
+Column {
     Nav(controller)
-    LazyColumn { items(cars){ car -> Text(car.color)} }
+    LazyColumn {
+
+        items(cars){ car ->
+            Text(car.color)
+            Text(car.tuition.toString())
+        } }
+
+}
 }
 @Composable
 fun CarListScreenWithLimits(db: Database,controller: NavController){
     val cars = db.carQueries.selectConLimits(3,0).executeAsList()
+Column {
     Nav(controller)
-    LazyColumn { items(cars){ car -> Text(car.tuition.toString())} }
+    LazyColumn {
+        items(cars){
+                car ->
+            Text(car.tuition.toString())
+            Text(car.color)
+        } }
+}
+
 }
 @Composable
-fun deleteCarById(db: Database,id:Long,controller: NavController ){
-    val deletedCar=db.carQueries.deletefromId(id).toString()
+fun deleteCarById(db: Database,id:Long,controller: NavController,route: HomeRoute){
+    val deletedCar=db.carQueries.deletefromId(id)
     Column {
         Nav(controller)
         if(deletedCar!= null){
-            Text(deletedCar)
+            Text("delete ok")
         }else{
             Text("Error al intentar eliminarlo de la bbdd")
         }
