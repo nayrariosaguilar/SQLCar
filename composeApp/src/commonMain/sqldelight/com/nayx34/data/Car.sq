@@ -18,3 +18,9 @@ SELECT * FROM Car WHERE tuition = ?;
 
 insertWithReturn:
 INSERT INTO Car(color) VALUES (?) RETURNING *;
+
+deletefromId:
+DELETE FROM Car WHERE tuition = ?;
+
+
+

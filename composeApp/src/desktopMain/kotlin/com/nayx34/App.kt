@@ -91,14 +91,28 @@ fun HomeScreen(controller: NavController){
     }
 }
 @Composable
-fun CarListScreen(db: Database){
+fun CarListScreen(db: Database,controller: NavController){
     val cars = db.carQueries.selectCar().executeAsList()
+    Nav(controller)
     LazyColumn { items(cars){ car -> Text(car.color)} }
 }
 @Composable
-fun CarListScreenWithLimits(db: Database){
+fun CarListScreenWithLimits(db: Database,controller: NavController){
     val cars = db.carQueries.selectConLimits(3,0).executeAsList()
+    Nav(controller)
     LazyColumn { items(cars){ car -> Text(car.tuition.toString())} }
+}
+@Composable
+fun deleteCarById(db: Database,id:Long,controller: NavController ){
+    val deletedCar=db.carQueries.deletefromId(id).toString()
+    Column {
+        Nav(controller)
+        if(deletedCar!= null){
+            Text(deletedCar)
+        }else{
+            Text("Error al intentar eliminarlo de la bbdd")
+        }
+    }
 }
 @Composable
 fun SelectCarById(db: Database, dogId: Long, route: HomeRoute,controller: NavController) {
